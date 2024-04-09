@@ -10,7 +10,7 @@ export class CreateUserDto {
         required: true,
         type: String
     })
-    idProfile: string;
+    profileId: string;
 
     @IsString()
     @MinLength(1)

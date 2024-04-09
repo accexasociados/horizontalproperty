@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './apis/user/user.module';
 import { PropertyModule } from './apis/property/property.module';
 import { LoginModule } from './apis/login/login.module';
+import { PermissionModule } from './apis/permission/permission.module';
+import { ProfileModule } from './apis/profile/profile.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -25,7 +27,9 @@ import databaseConfig from './config/database.config';
     AuthModule,
     UserModule,
     PropertyModule,
-    LoginModule
+    LoginModule,
+    PermissionModule,
+    ProfileModule
   ],
   controllers: [],
   providers: [],

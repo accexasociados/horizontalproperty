@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PropertyService } from './property.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Property')
 @Controller('property')
 export class PropertyController {
   constructor(private readonly propertyService: PropertyService) {}

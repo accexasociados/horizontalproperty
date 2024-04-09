@@ -4,7 +4,6 @@ import { Document } from "mongoose";
 @Schema()
 export class User extends Document {
     @Prop({ required: true })
-    // @apipro
     idProfile: string;
 
     @Prop({ required: true, unique: true })
