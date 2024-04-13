@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { Model } from 'mongoose';
+import { Model, Types, isValidObjectId } from 'mongoose';
 import { Profile } from './entities/profile.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Permission } from '../permission/entities/permission.entity';
@@ -10,7 +10,6 @@ import { Permission } from '../permission/entities/permission.entity';
 export class ProfileService {
   constructor(
     @InjectModel(Profile.name) private _profileModel: Model<Profile>,
-    @InjectModel(Permission.name) private _permissionModel: Model<Permission>,
   ) {}
 
   create(profile: CreateProfileDto) {
@@ -21,22 +20,27 @@ export class ProfileService {
 
   async findAll() {
     const profiles = await this._profileModel.find().exec();
-    if (profiles.length > 0) {
-      this._concatPermissions(profiles);
-    }
     return profiles;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  async findOne(id: number) {
+    return await this._profileModel.findById(id).exec();
   }
 
   update(id: number, profile: UpdateProfileDto) {
-    return `This action updates a #${id} profile`;
+    const user = this._profileModel.findByIdAndUpdate(id, { $set: profile }, { new: true }).exec();
+    if (!user) {
+      throw new NotFoundException('USERNOTFOUND');
+    }
+    return user;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} profile`;
+    const user = this._profileModel.findByIdAndUpdate(id, { $set: { state: false } }, { new: true }).exec();
+    if (!user) {
+      throw new NotFoundException('USERNOTFOUND');
+    }
+    return user;
   }
 
   private _validateSelectionPermissions(

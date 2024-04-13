@@ -10,6 +10,15 @@ export class CreatePermissionDto {
         required: false,
         type: String
     })
+    _id?: string;
+
+    @IsOptional()
+    @IsMongoId()
+    @ApiProperty({
+        description: 'Este es le id del peermiso padre, es cuando el perfil actual depende de otro',
+        required: false,
+        type: String
+    })
     parentId: string;
 
     @IsString()

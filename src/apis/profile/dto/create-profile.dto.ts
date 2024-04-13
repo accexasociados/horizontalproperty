@@ -4,6 +4,15 @@ import { IsArray, IsBoolean, IsString, MinLength, ValidateNested } from 'class-v
 import { CreatePermissionDto } from 'src/apis/permission/dto/create-permission.dto';
 
 export class CreateProfileDto {
+
+  @IsString()
+  @ApiProperty({
+    description: 'id del perfil',
+    required: false,
+    type: String,
+  })
+  _id?: string;
+
   @IsString()
   @MinLength(1)
   @ApiProperty({
